@@ -91,6 +91,32 @@ private void tabelPupukMouseClicked() {
         txtIdPupuk.setEnabled(false);
     }
 }
+private void cariDataPupuk() {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID Pupuk");
+    model.addColumn("Nama Pupuk");
+    model.addColumn("Jenis");
+    model.addColumn("Dosis (kg/ha)");
+
+    try {
+        ResultSet rs = objekPupuk.cariDataPupuk(txtCari.getText());
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("id_pupuk"),
+                rs.getString("nama_pupuk"),
+                rs.getString("jenis_pupuk"),
+                rs.getDouble("dosis_per_ha_kg")
+            });
+        }
+
+        tabelPupuk.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Pencarian gagal: " + e.getMessage());
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,6 +139,8 @@ private void tabelPupukMouseClicked() {
         btnHapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelPupuk = new javax.swing.JTable();
+        btnLaporan = new javax.swing.JButton();
+        txtCari = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,11 +186,24 @@ private void tabelPupukMouseClicked() {
         ));
         jScrollPane1.setViewportView(tabelPupuk);
 
+        btnLaporan.setText("cetak laporan");
+        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporanActionPerformed(evt);
+            }
+        });
+
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -175,13 +216,17 @@ private void tabelPupukMouseClicked() {
                     .addComponent(txtNamaPupuk)
                     .addComponent(cmbJenisPupuk, 0, 107, Short.MAX_VALUE)
                     .addComponent(txtDosis))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUbah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLaporan))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUbah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCari)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
@@ -207,11 +252,14 @@ private void tabelPupukMouseClicked() {
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLaporan)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         pack();
@@ -306,6 +354,36 @@ private void tabelPupukMouseClicked() {
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+        String keyword = txtCari.getText();
+    String sql;
+
+    if (keyword.isEmpty()) {
+        sql = "SELECT id_pupuk, nama_pupuk, jenis_pupuk, dosis_per_ha_kg FROM pupuk";
+    } else {
+        sql = "SELECT id_pupuk, nama_pupuk, jenis_pupuk, dosis_per_ha_kg FROM pupuk " +
+              "WHERE id_pupuk LIKE '%" + keyword + "%' " +
+              "OR nama_pupuk LIKE '%" + keyword + "%' " +
+              "OR jenis_pupuk LIKE '%" + keyword + "%'";
+    }
+
+    objekPupuk.cetakLaporan(
+        "src/laporan/laporanPupuk.jrxml",
+        sql
+    );
+        
+    }//GEN-LAST:event_btnLaporanActionPerformed
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
+        if (txtCari.getText().isEmpty()) {
+        tampilDataPupuk();
+    } else {
+        cariDataPupuk();
+    }
+    }//GEN-LAST:event_txtCariKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +421,7 @@ private void tabelPupukMouseClicked() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
     private javax.swing.JComboBox<String> cmbJenisPupuk;
@@ -352,6 +431,7 @@ private void tabelPupukMouseClicked() {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelPupuk;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtDosis;
     private javax.swing.JTextField txtIdPupuk;
     private javax.swing.JTextField txtNamaPupuk;

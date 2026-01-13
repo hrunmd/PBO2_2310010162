@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -38,14 +38,20 @@
                   <Component id="cmbJenisPupuk" alignment="0" pref="107" max="32767" attributes="0"/>
                   <Component id="txtDosis" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnTambah" max="32767" attributes="0"/>
-                  <Component id="btnUbah" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnHapus" alignment="0" max="32767" attributes="0"/>
+              <EmptySpace pref="8" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnTambah" max="32767" attributes="0"/>
+                      <Component id="btnUbah" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnHapus" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="btnLaporan" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="403" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="txtCari" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="403" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -77,6 +83,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDosis" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -84,7 +91,9 @@
                       <Component id="jScrollPane1" min="-2" pref="180" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="124" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="txtCari" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="90" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -171,5 +180,18 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnLaporan">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="cetak laporan"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtCari">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCariKeyReleased"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

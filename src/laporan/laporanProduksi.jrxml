@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d4a0b59-7a8b-4b1e-ab8b-33753abe6d38">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from produksi;]]>
+	</queryString>
+	<field name="id_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_lahan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_pupuk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tahun" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_padi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hasil_panen_kg" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="id_produksi">
+		<groupExpression><![CDATA[$F{id_produksi}]]></groupExpression>
+	</group>
+	<group name="id_lahan">
+		<groupExpression><![CDATA[$F{id_lahan}]]></groupExpression>
+	</group>
+	<group name="id_pupuk">
+		<groupExpression><![CDATA[$F{id_pupuk}]]></groupExpression>
+	</group>
+	<group name="tahun">
+		<groupExpression><![CDATA[$F{tahun}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="6fb1a735-5941-439a-b802-b396f406705b"/>
+				<text><![CDATA[id_produksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="3d72e52f-f6b8-4474-8b0b-8c2b21a8dad8"/>
+				<text><![CDATA[id_lahan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="07f4cb0a-f820-422e-8b75-ac30a0866faf"/>
+				<text><![CDATA[id_pupuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="0" width="100" height="20" uuid="b80bf88b-350b-4534-ae2b-9fed0b9b9a3e"/>
+				<text><![CDATA[tahun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="100" height="20" uuid="8dc328c6-9f10-485e-b03d-b010106593d7"/>
+				<text><![CDATA[jenis_padi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="d79abd19-bac5-4bbc-900a-f3b06c8b30a2"/>
+				<text><![CDATA[hasil_panen_kg]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d78dd797-bb70-4bcd-8570-2107b0f107c3"/>
+				<textFieldExpression><![CDATA[$F{id_produksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="2c79f4b9-75e3-4d98-a51a-e5b3234dd37a"/>
+				<textFieldExpression><![CDATA[$F{id_lahan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="1865d496-e35f-4bd0-ad11-4dc07192fd6a"/>
+				<textFieldExpression><![CDATA[$F{id_pupuk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="0" width="100" height="20" uuid="5e54cdfe-43fc-44ff-9f97-c6569db38f40"/>
+				<textFieldExpression><![CDATA[$F{tahun}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="100" height="20" uuid="87650943-e1cc-4126-b623-181ef2169873"/>
+				<textFieldExpression><![CDATA[$F{jenis_padi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="100" height="20" uuid="392f5f32-7897-4d93-8923-5da808d95e13"/>
+				<textFieldExpression><![CDATA[$F{hasil_panen_kg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

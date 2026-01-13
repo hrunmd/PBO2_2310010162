@@ -94,6 +94,39 @@ public class frameLahan extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error saat mengisi tabel: " + e.getMessage());
     }
 }
+    
+    private void cariDataLahan() {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID Lahan");
+    model.addColumn("ID Petani"); // FK (disembunyikan)
+    model.addColumn("Nama Petani");
+    model.addColumn("Luas (ha)");
+    model.addColumn("Lokasi");
+
+    try {
+        ResultSet rs = objekLahan.cariDataLahan(txtCari.getText());
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("id_lahan"),
+                rs.getString("id_petani"),
+                rs.getString("nama_petani"),
+                rs.getString("luas_lahan_ha"),
+                rs.getString("lokasi")
+            });
+        }
+
+        tabelLahan.setModel(model);
+
+        // Sembunyikan kolom ID Petani
+        tabelLahan.getColumnModel().getColumn(1).setMinWidth(0);
+        tabelLahan.getColumnModel().getColumn(1).setMaxWidth(0);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Pencarian gagal: " + e.getMessage());
+    }
+}
+
     private void tabelLahanMouseClicked() {
     int baris = tabelLahan.getSelectedRow();
     if (baris != -1) { 
@@ -136,6 +169,8 @@ public class frameLahan extends javax.swing.JFrame {
         btnHapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelLahan = new javax.swing.JTable();
+        txtCari = new javax.swing.JTextField();
+        btnLaporan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,31 +216,57 @@ public class frameLahan extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelLahan);
 
+        txtCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCariActionPerformed(evt);
+            }
+        });
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCariKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
+        btnLaporan.setText("Cetak Laporan");
+        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtLokasi, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtluasLahan, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbIdPetani, javax.swing.GroupLayout.Alignment.LEADING, 0, 97, Short.MAX_VALUE)
-                    .addComponent(txtIdLahan, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUbah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(51, 51, 51)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtLokasi, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtluasLahan, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbIdPetani, javax.swing.GroupLayout.Alignment.LEADING, 0, 97, Short.MAX_VALUE)
+                            .addComponent(txtIdLahan, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnUbah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnHapus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnLaporan))
+                        .addGap(51, 51, 51)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,8 +292,11 @@ public class frameLahan extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(96, Short.MAX_VALUE))
+                            .addComponent(txtLokasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLaporan))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         pack();
@@ -318,6 +382,34 @@ public class frameLahan extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariKeyPressed
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
+         if (txtCari.getText().isEmpty()) {
+        tampilDataLahan();
+    } else {
+        cariDataLahan();
+    }
+    }//GEN-LAST:event_txtCariKeyReleased
+
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+        objekLahan.cetakLaporan(
+    "src/laporan/laporanLahan.jrxml",
+    "SELECT l.id_lahan, p.nama_petani, l.luas_lahan_ha, l.lokasi " +
+    "FROM lahan l JOIN petani p ON l.id_petani = p.id_petani"
+);
+
+    }//GEN-LAST:event_btnLaporanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,6 +447,7 @@ public class frameLahan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
     private javax.swing.JComboBox<String> cmbIdPetani;
@@ -364,6 +457,7 @@ public class frameLahan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelLahan;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtIdLahan;
     private javax.swing.JTextField txtLokasi;
     private javax.swing.JTextField txtluasLahan;

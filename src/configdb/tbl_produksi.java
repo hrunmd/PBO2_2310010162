@@ -8,6 +8,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.util.Set;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -136,4 +148,49 @@ public class tbl_produksi {
             e.printStackTrace();
         }
     }
+    
+    public void cetakLaporan(String fileLaporan, String SQL){
+        try {
+            File file = new File(fileLaporan);
+            JasperDesign jasDes = JRXmlLoader.load(file);
+            JRDesignQuery query = new JRDesignQuery();
+            query.setText(SQL);
+            jasDes.setQuery(query);
+            JasperReport jr = JasperCompileManager.compileReport(jasDes);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, this.koneksi);
+            JasperViewer.viewReport(jp);
+            
+        } catch (Exception e) {
+    JOptionPane.showMessageDialog(null, 
+        "Gagal cetak laporan:\n" + e.getMessage());
+    e.printStackTrace();
+}
+
+    } 
+    
+    public ResultSet cariDataProduksi(String keyword) {
+    try {
+        String sql =
+            "SELECT p.id_produksi, p.id_lahan, p.id_pupuk, " +
+            "l.lokasi, pu.nama_pupuk, p.tahun, " +
+            "p.jenis_padi, p.hasil_panen_kg " +
+            "FROM produksi p " +
+            "JOIN lahan l ON p.id_lahan = l.id_lahan " +
+            "JOIN pupuk pu ON p.id_pupuk = pu.id_pupuk " +
+            "WHERE p.id_produksi LIKE '%" + keyword + "%' " +
+            "OR p.jenis_padi LIKE '%" + keyword + "%' " +
+            "OR l.lokasi LIKE '%" + keyword + "%' " +
+            "OR pu.nama_pupuk LIKE '%" + keyword + "%'";
+
+        return koneksi.createStatement().executeQuery(sql);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+            "Gagal mencari data produksi:\n" + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+
 }

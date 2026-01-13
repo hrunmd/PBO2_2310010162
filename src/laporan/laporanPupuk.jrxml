@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="375cf418-50b4-4d23-a9f9-c936b3dee8c5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from pupuk;]]>
+	</queryString>
+	<field name="id_pupuk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pupuk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_pupuk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dosis_per_ha_kg" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="id_pupuk">
+		<groupExpression><![CDATA[$F{id_pupuk}]]></groupExpression>
+	</group>
+	<group name="nama_pupuk">
+		<groupExpression><![CDATA[$F{nama_pupuk}]]></groupExpression>
+	</group>
+	<group name="jenis_pupuk">
+		<groupExpression><![CDATA[$F{jenis_pupuk}]]></groupExpression>
+	</group>
+	<group name="dosis_per_ha_kg">
+		<groupExpression><![CDATA[$F{dosis_per_ha_kg}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="ee270f48-86fb-454d-bc84-3e9293ca2ff5"/>
+				<text><![CDATA[id_pupuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="3117a163-5f25-4a2c-b9fb-9a3d4346d441"/>
+				<text><![CDATA[nama_pupuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="89e1cbaa-d15d-4de3-b903-db85a78c2430"/>
+				<text><![CDATA[jenis_pupuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="a0c69d80-d828-486c-b9b2-ac1fe3021bd1"/>
+				<text><![CDATA[dosis_per_ha_kg]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f79b95de-d703-4dea-92dc-808063ff9ad8"/>
+				<textFieldExpression><![CDATA[$F{id_pupuk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="8bdbca9f-7ffe-41c0-a88c-13d1e8e6371f"/>
+				<textFieldExpression><![CDATA[$F{nama_pupuk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="75f275f2-7775-4a68-a321-842b79b7720d"/>
+				<textFieldExpression><![CDATA[$F{jenis_pupuk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="b3eb916a-00ff-4f0f-9e67-cbb7d98cf7b4"/>
+				<textFieldExpression><![CDATA[$F{dosis_per_ha_kg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

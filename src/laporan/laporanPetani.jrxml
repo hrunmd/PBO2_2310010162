@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c7c98182-beb8-4877-bc31-3655eca444ad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from petani;]]>
+	</queryString>
+	<field name="id_petani" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_petani" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alamat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_hp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="id_petani">
+		<groupExpression><![CDATA[$F{id_petani}]]></groupExpression>
+	</group>
+	<group name="nama_petani">
+		<groupExpression><![CDATA[$F{nama_petani}]]></groupExpression>
+	</group>
+	<group name="alamat">
+		<groupExpression><![CDATA[$F{alamat}]]></groupExpression>
+	</group>
+	<group name="no_hp">
+		<groupExpression><![CDATA[$F{no_hp}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7b40aa31-4949-4f49-8133-f63b30d5f757"/>
+				<text><![CDATA[id_petani]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="0" width="100" height="20" uuid="36764c24-3e58-4dcd-b810-18b4dea70266"/>
+				<text><![CDATA[nama_petani]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="2" width="100" height="20" uuid="5ef6a7b0-8996-4b11-afc0-1fac13a8b043"/>
+				<text><![CDATA[alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="2" width="100" height="20" uuid="3b75dbd8-366b-4ef1-8422-5a74b86b9df3"/>
+				<text><![CDATA[no_hp]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="a8d87c8b-e640-4e92-a6d9-ed7f7ed45769"/>
+				<textFieldExpression><![CDATA[$F{id_petani}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="0" width="100" height="20" uuid="053d21f1-a333-4f93-8379-3dfeab50f6c9"/>
+				<textFieldExpression><![CDATA[$F{nama_petani}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="4" width="100" height="20" uuid="53f41494-4e08-48a5-bd07-d511c720e366"/>
+				<textFieldExpression><![CDATA[$F{alamat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="10" width="100" height="20" uuid="25915e75-b5dc-4aaa-9e64-cd1131bb8299"/>
+				<textFieldExpression><![CDATA[$F{no_hp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

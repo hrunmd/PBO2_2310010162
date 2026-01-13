@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport 
+    xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports 
+    http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+    name="laporanLahan"
+    language="groovy"
+    pageWidth="595"
+    pageHeight="842"
+    columnWidth="555"
+    leftMargin="20"
+    rightMargin="20"
+    topMargin="20"
+    bottomMargin="20"
+    uuid="8f3c1110-37f2-4b37-878c-d6431eb0a8e8">
+
+    <!-- QUERY -->
+    <queryString language="SQL">
+        <![CDATA[
+        SELECT 
+            l.id_lahan,
+            p.nama_petani,
+            l.luas_lahan_ha,
+            l.lokasi
+        FROM lahan l
+        JOIN petani p ON l.id_petani = p.id_petani
+        ]]>
+    </queryString>
+
+    <!-- FIELDS -->
+    <field name="id_lahan" class="java.lang.String"/>
+    <field name="nama_petani" class="java.lang.String"/>
+    <field name="luas_lahan_ha" class="java.math.BigDecimal"/>
+    <field name="lokasi" class="java.lang.String"/>
+
+    <!-- TITLE -->
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LAPORAN DATA LAHAN PERTANIAN]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <!-- COLUMN HEADER -->
+    <columnHeader>
+        <band height="25">
+            <staticText>
+                <reportElement x="0" y="0" width="100" height="20"/>
+                <text><![CDATA[ID Lahan]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="110" y="0" width="150" height="20"/>
+                <text><![CDATA[Nama Petani]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="270" y="0" width="100" height="20"/>
+                <text><![CDATA[Luas (ha)]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="380" y="0" width="175" height="20"/>
+                <text><![CDATA[Lokasi]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- DETAIL -->
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="100" height="20"/>
+                <textFieldExpression><![CDATA[$F{id_lahan}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="110" y="0" width="150" height="20"/>
+                <textFieldExpression><![CDATA[$F{nama_petani}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="270" y="0" width="100" height="20"/>
+                <textFieldExpression><![CDATA[$F{luas_lahan_ha}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="380" y="0" width="175" height="20"/>
+                <textFieldExpression><![CDATA[$F{lokasi}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- FOOTER -->
+    <pageFooter>
+        <band height="30">
+            <staticText>
+                <reportElement x="0" y="5" width="555" height="20"/>
+                <textElement textAlignment="Center">
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Dicetak oleh Sistem Pendataan Pertanian]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+
+</jasperReport>

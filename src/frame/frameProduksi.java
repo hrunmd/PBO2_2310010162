@@ -165,6 +165,49 @@ public class frameProduksi extends javax.swing.JFrame {
         txtIdProduksi.setEnabled(false);
     }
 }
+    private void cariDataProduksi() {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID Produksi");
+    model.addColumn("ID Lahan");     // disembunyikan
+    model.addColumn("ID Pupuk");     // disembunyikan
+    model.addColumn("Lokasi");
+    model.addColumn("Pupuk");
+    model.addColumn("Tahun");
+    model.addColumn("Jenis Padi");
+    model.addColumn("Hasil (Kg)");
+
+    try {
+        ResultSet rs = objekProduksi.cariDataProduksi(txtCari.getText());
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("id_produksi"),
+                rs.getString("id_lahan"),
+                rs.getString("id_pupuk"),
+                rs.getString("lokasi"),
+                rs.getString("nama_pupuk"),
+                rs.getString("tahun"),
+                rs.getString("jenis_padi"),
+                rs.getInt("hasil_panen_kg")
+            });
+        }
+
+        tabelProduksi.setModel(model);
+
+        // Sembunyikan kolom FK
+        tabelProduksi.getColumnModel().getColumn(1).setMinWidth(0);
+        tabelProduksi.getColumnModel().getColumn(1).setMaxWidth(0);
+        tabelProduksi.getColumnModel().getColumn(2).setMinWidth(0);
+        tabelProduksi.getColumnModel().getColumn(2).setMaxWidth(0);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Pencarian gagal:\n" + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -192,6 +235,8 @@ public class frameProduksi extends javax.swing.JFrame {
         btnHapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelProduksi = new javax.swing.JTable();
+        txtCari = new javax.swing.JTextField();
+        btnLaporan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -241,11 +286,24 @@ public class frameProduksi extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelProduksi);
 
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
+        btnLaporan.setText("cetak laporan");
+        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -263,13 +321,16 @@ public class frameProduksi extends javax.swing.JFrame {
                     .addComponent(txtJenisPadi)
                     .addComponent(txtHasilKg))
                 .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUbah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHapus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUbah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLaporan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCari)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,7 +358,8 @@ public class frameProduksi extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLaporan))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -306,7 +368,9 @@ public class frameProduksi extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(txtHasilKg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -398,6 +462,51 @@ public class frameProduksi extends javax.swing.JFrame {
     
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+                                                   
+    String keyword = txtCari.getText();
+    String sql;
+
+    if (keyword.isEmpty()) {
+        sql =
+            "SELECT p.id_produksi, p.id_lahan, p.id_pupuk, " +
+            "l.lokasi, pu.nama_pupuk, " +
+            "p.tahun, p.jenis_padi, p.hasil_panen_kg " +
+            "FROM produksi p " +
+            "JOIN lahan l ON p.id_lahan = l.id_lahan " +
+            "JOIN pupuk pu ON p.id_pupuk = pu.id_pupuk";
+    } else {
+        sql =
+            "SELECT p.id_produksi, p.id_lahan, p.id_pupuk, " +
+            "l.lokasi, pu.nama_pupuk, " +
+            "p.tahun, p.jenis_padi, p.hasil_panen_kg " +
+            "FROM produksi p " +
+            "JOIN lahan l ON p.id_lahan = l.id_lahan " +
+            "JOIN pupuk pu ON p.id_pupuk = pu.id_pupuk " +
+            "WHERE p.id_produksi LIKE '%" + keyword + "%' " +
+            "OR p.jenis_padi LIKE '%" + keyword + "%' " +
+            "OR l.lokasi LIKE '%" + keyword + "%' " +
+            "OR pu.nama_pupuk LIKE '%" + keyword + "%'";
+    }
+
+    objekProduksi.cetakLaporan(
+        "src/laporan/laporanProduksi.jrxml",
+        sql
+    );
+
+
+    }//GEN-LAST:event_btnLaporanActionPerformed
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
+        if (txtCari.getText().isEmpty()) {
+        tampilDataProduksi();
+    } else {
+        cariDataProduksi();
+    }
+    }//GEN-LAST:event_txtCariKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -435,6 +544,7 @@ public class frameProduksi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
     private javax.swing.JComboBox<String> cmbIdLahan;
@@ -447,6 +557,7 @@ public class frameProduksi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelProduksi;
+    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtHasilKg;
     private javax.swing.JTextField txtIdProduksi;
     private javax.swing.JTextField txtJenisPadi;

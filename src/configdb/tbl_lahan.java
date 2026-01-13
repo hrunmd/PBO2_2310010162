@@ -12,6 +12,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.util.Set;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -131,4 +143,41 @@ public class tbl_lahan {
             e.printStackTrace();
         }
     }
+    
+    public void cetakLaporan(String fileLaporan, String SQL){
+        try {
+            File file = new File(fileLaporan);
+            JasperDesign jasDes = JRXmlLoader.load(file);
+            JRDesignQuery query = new JRDesignQuery();
+            query.setText(SQL);
+            jasDes.setQuery(query);
+            JasperReport jr = JasperCompileManager.compileReport(jasDes);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, this.koneksi);
+            JasperViewer.viewReport(jp);
+            
+        } catch (Exception e) {
+    JOptionPane.showMessageDialog(null, 
+        "Gagal cetak laporan:\n" + e.getMessage());
+    e.printStackTrace();
+}
+
+    }
+
+    public ResultSet cariDataLahan(String keyword) {
+    try {
+        String sql =
+            "SELECT l.id_lahan, l.id_petani, p.nama_petani, l.luas_lahan_ha, l.lokasi " +
+            "FROM lahan l JOIN petani p ON l.id_petani = p.id_petani " +
+            "WHERE l.id_lahan LIKE '%" + keyword + "%' " +
+            "OR p.nama_petani LIKE '%" + keyword + "%' " +
+            "OR l.lokasi LIKE '%" + keyword + "%'";
+
+        return koneksi.createStatement().executeQuery(sql);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal mencari data lahan: " + e.getMessage());
+        return null;
+    }
+}
+
 }

@@ -33,26 +33,30 @@
               </Group>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="txtNoHp" min="-2" pref="95" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="txtIdPetani" alignment="1" min="-2" pref="95" max="-2" attributes="0"/>
-                              <Component id="txtNamaPetani" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="txtAlamat" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Component id="txtIdPetani" alignment="1" min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="txtNamaPetani" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnTambah" max="32767" attributes="0"/>
-                          <Component id="btnUbah" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnHapus" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtAlamat" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="txtNoHp" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="360" max="-2" attributes="0"/>
-              <EmptySpace pref="81" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnTambah" max="32767" attributes="0"/>
+                      <Component id="btnUbah" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnHapus" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="btnLaporan" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="txtCari" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="360" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,10 +91,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNoHp" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLaporan" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="132" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="txtCari" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="97" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -169,5 +176,18 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnLaporan">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="cetak laporan"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtCari">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCariKeyReleased"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
